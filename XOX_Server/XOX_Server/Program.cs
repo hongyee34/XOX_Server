@@ -30,16 +30,17 @@ namespace XOX_Server
             const int MAX_SIZE = 1024;
             NetworkStream stream = client.GetStream();
 
-            // 비동기 수신            
-            byte[] buff = new byte[MAX_SIZE];
-            int nbytes = await stream.ReadAsync(buff, 0, buff.Length);
-            if (nbytes > 0)
+            while (true)
             {
-                string msg = Encoding.ASCII.GetString(buff, 0, nbytes);
-                Console.WriteLine($"{msg} at {DateTime.Now}");
+                byte[] buff = new byte[MAX_SIZE];
+                int nbytes = await stream.ReadAsync(buff, 0, buff.Length);
+                if (nbytes == 0)
+                    break;
+                    string msg = Encoding.ASCII.GetString(buff, 0, nbytes);
+                    Console.WriteLine($"{msg} at {DateTime.Now}");
 
-                // 비동기 송신
-                await stream.WriteAsync(buff, 0, nbytes);
+                    // 비동기 송신
+                    await stream.WriteAsync(buff, 0, nbytes);
             }
 
             stream.Close();
