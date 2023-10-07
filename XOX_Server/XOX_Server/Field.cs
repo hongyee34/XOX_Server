@@ -14,5 +14,14 @@ namespace XOX_Server
         {
             field[index.x, index.y] = building;
         }
+
+        public void GetDamage(int power,(int x,int y) index)
+        {
+            if (field[index.x, index.y] != null)
+            {
+                field[index.x, index.y].hp -= power;
+
+            }
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace XOX_Server
                 TurnDirection();
                 foreach((int,int) index in targetList)
                 {
-                    targetField.field[index.Item1, index.Item2].hp -= power;
+                    Field.Instance.GetDamage(power, index);
                 }
                 await Task.Delay((int)(attackSpeed*1000));
             }

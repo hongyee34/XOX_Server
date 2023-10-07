@@ -15,11 +15,17 @@ namespace XOX_Server
         {
             CommandData commandData = JsonSerializer.Deserialize<CommandData>(message);
 
-            if(commandData?.command == "PlaceBuilding")
+            switch (commandData.command)
             {
-                Building buildingToPlace = (Building)CardDictionary.Instance.cardDictionary[commandData.type](commandData.direction);
-                Field.Instance.PlaceBuilding(buildingToPlace, commandData.target);
+                case "PlaceBuilding":
+                    Building buildingToPlace = (Building)CardDictionary.Instance.cardDictionary[commandData.type](commandData.direction);
+                    Field.Instance.PlaceBuilding(buildingToPlace, commandData.target);
+                    break;
+                case "UseSpell":
+
+                    break;
             }
+
         }
     }
 }

@@ -17,8 +17,9 @@ namespace XOX_Server.Buildings
             power = 50;
             attackSpeed = 1.2f;
             direction = a;
-            TurnDirection();
             targetList.Add((1, 1));
+            TurnDirection();
+            Attack();
         }
     }
 }
