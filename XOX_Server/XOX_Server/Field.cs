@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace XOX_Server
 {
-    public class Field
+    public class Field : Singleton<Field>
     {
-        public Building[,] field = new Building[3,3];
+        private Building[,] field = new Building[3,3];
 
-        
+        public void PlaceBuilding(Building building,(int x,int y) index)
+        {
+            field[index.x, index.y] = building;
+        }
     }
 }

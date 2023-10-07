@@ -8,7 +8,6 @@ namespace XOX_Server
 {
     public abstract class Card
     {
-        public Field targetField;
         public int grade;
         public int cost;
         public string synergy;

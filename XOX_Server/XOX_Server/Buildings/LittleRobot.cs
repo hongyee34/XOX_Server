@@ -8,8 +8,7 @@ namespace XOX_Server.Buildings
 {
     public class LittleRobot : Building
     {
-        public LittleRobot(Field a,int b) {
-            targetField = a;
+        public LittleRobot(int a) {
             grade = 1;
             cost = 3;
             synergy = "Machine";
@@ -17,8 +16,9 @@ namespace XOX_Server.Buildings
             hp = 900;
             power = 50;
             attackSpeed = 1.2f;
-            direction = b;
-            targetList = new List<(int,int)> { (1, 0) };
+            direction = a;
+            TurnDirection();
+            targetList.Add((1, 1));
         }
     }
 }

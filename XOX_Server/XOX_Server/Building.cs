@@ -11,12 +11,16 @@ namespace XOX_Server
         public int hp;
         public int power;
         public float attackSpeed;
-        public List<(int, int)> targetList;
+        public List<(int, int)> targetList = new();
         public int direction;
 
-        public async virtual void attack()
+        public Building()
         {
-            TurnDirection();
+            Attack();
+        }
+
+        public async virtual void Attack()
+        {
             while (true)
             {
                 TurnDirection();
@@ -27,13 +31,13 @@ namespace XOX_Server
                 await Task.Delay((int)(attackSpeed*1000));
             }
         }
-        private void TurnDirection()
+        public void TurnDirection()
         {
             for (int i = 0; i < targetList.Count(); i++)
             {
                 for (int j = 0; j < direction; j++)
                 {
-                    targetList[i] = (targetList[i].Item2,targetList[i].Item1*-1);
+                    targetList[i] = (targetList[i].Item2,-targetList[i].Item1);
                 }
             }
         }
