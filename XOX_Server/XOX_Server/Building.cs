@@ -21,7 +21,6 @@ namespace XOX_Server
         {
             while (true)
             {
-                TurnDirection();
                 foreach((int,int) index in targetList)
                 {
                     Field.Instance.GetDamage(power, index);

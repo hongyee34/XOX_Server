@@ -22,7 +22,7 @@ namespace XOX_Server
                     Field.Instance.PlaceBuilding(buildingToPlace, commandData.target);
                     break;
                 case "UseSpell":
-
+                    CardDictionary.Instance.cardDictionary[commandData.type](commandData.direction);
                     break;
             }
 

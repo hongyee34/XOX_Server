@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XOX_Server.Buildings;
+using XOX_Server.Spells;
 
 namespace XOX_Server
 {
@@ -11,7 +12,8 @@ namespace XOX_Server
     {
         public Dictionary<int, Func<int, Card>> cardDictionary = new()
         {
-            { 1, (param) => new LittleRobot(param) }
+            { 1, (param) => new LittleRobot(param) },
+            {2, (param) => new Laser(param) }
         };
     }
 }

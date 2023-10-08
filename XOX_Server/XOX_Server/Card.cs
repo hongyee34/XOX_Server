@@ -13,17 +13,27 @@ namespace XOX_Server
         protected string synergy;
         protected float delayTime;
 
+        protected (int x, int y) objectIndex;
         protected int direction;
-        protected List<(int, int)> targetList = new();
+        protected List<(int x, int y)> AttackDirectionList = new();
+        protected List<(int x,int y)> targetList = new();
 
         protected void TurnDirection()
         {
-            for (int i = 0; i < targetList.Count(); i++)
+            for (int i = 0; i < AttackDirectionList.Count(); i++)
             {
                 for (int j = 0; j < direction; j++)
                 {
-                    targetList[i] = (targetList[i].Item2, -targetList[i].Item1);
+                    AttackDirectionList[i] = (AttackDirectionList[i].Item2, -AttackDirectionList[i].Item1);
                 }
+            }
+        }
+        
+        protected void SetTargetList() 
+        {
+            for(int i = 0;i < AttackDirectionList.Count();i++)
+            {
+                targetList[i] = Extensions.Sum(objectIndex, AttackDirectionList[i]);
             }
         }
 

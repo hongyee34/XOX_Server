@@ -8,15 +8,17 @@ namespace XOX_Server.Spells
 {
     public class Laser : Spell
     {
-        public Laser(int a)
+        public Laser((int,int) index,int dir)
         {
             power = 200;
-            targetList = new List<(int, int)>() { (0, 0), (1, 0), (2, 0) };
+            AttackDirectionList = new List<(int, int)>() { (0, 0), (1, 0), (2, 0) };
 
-            direction = a;
+            objectIndex = index;
+            direction = dir;
 
             WaitDelayTime();
             TurnDirection();
+            SetTargetList();
             Skill();
 
         }
@@ -25,7 +27,7 @@ namespace XOX_Server.Spells
         {
             foreach((int x,int y) target in targetList)
             {
-                Field.Instance.GetDamage(power, target);
+                Field.Instance.GetDamage(power, Extensions.Sum(objectIndex, target));
             }
         }
     }

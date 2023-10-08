@@ -10,6 +10,6 @@ namespace XOX_Server
     {
         protected int power;
 
-        protected abstract void Skill();
+        protected abstract void Skill(); 
     }
 }

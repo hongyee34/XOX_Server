@@ -15,13 +15,14 @@ namespace XOX_Server
             field[index.x, index.y] = building;
         }
 
-        public void GetDamage(int power,(int x,int y) index)
+        public bool GetDamage(int power,(int x,int y) index)
         {
             if (field[index.x, index.y] != null)
             {
                 field[index.x, index.y].GetDamage(power);
-
+                return true;
             }
+            return false;
         }
     }
 }

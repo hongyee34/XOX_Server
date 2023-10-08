@@ -13,7 +13,7 @@ namespace XOX_Server.Buildings
             cost = 3;
             synergy = "Machine";
             delayTime = 1.5f;
-            targetList.Add((1, 1));
+            AttackDirectionList.Add((1, 1));
 
             hp = 900;
             power = 50;
@@ -23,6 +23,7 @@ namespace XOX_Server.Buildings
 
             WaitDelayTime();
             TurnDirection();
+            SetTargetList();
             Attack();
         }
     }
