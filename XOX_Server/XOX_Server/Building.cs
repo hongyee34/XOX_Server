@@ -8,18 +8,16 @@ namespace XOX_Server
 {
     public abstract class Building : Card
     {
-        public int hp;
-        public int power;
-        public float attackSpeed;
-        public List<(int, int)> targetList = new();
-        public int direction;
+        protected int hp;
+        protected int power;
+        protected float attackSpeed;
 
-        public Building()
+        protected Building()
         {
             Attack();
         }
 
-        public async virtual void Attack()
+        protected async virtual void Attack()
         {
             while (true)
             {
@@ -31,15 +29,10 @@ namespace XOX_Server
                 await Task.Delay((int)(attackSpeed*1000));
             }
         }
-        public void TurnDirection()
+
+        public void GetDamage(int power)
         {
-            for (int i = 0; i < targetList.Count(); i++)
-            {
-                for (int j = 0; j < direction; j++)
-                {
-                    targetList[i] = (targetList[i].Item2,-targetList[i].Item1);
-                }
-            }
+            hp -= power;
         }
     }
 }

@@ -12,12 +12,16 @@ namespace XOX_Server.Buildings
             grade = 1;
             cost = 3;
             synergy = "Machine";
+            delayTime = 1.5f;
+            targetList.Add((1, 1));
 
             hp = 900;
             power = 50;
             attackSpeed = 1.2f;
+
             direction = a;
-            targetList.Add((1, 1));
+
+            WaitDelayTime();
             TurnDirection();
             Attack();
         }

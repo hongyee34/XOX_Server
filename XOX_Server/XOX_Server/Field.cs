@@ -19,7 +19,7 @@ namespace XOX_Server
         {
             if (field[index.x, index.y] != null)
             {
-                field[index.x, index.y].hp -= power;
+                field[index.x, index.y].GetDamage(power);
 
             }
         }
