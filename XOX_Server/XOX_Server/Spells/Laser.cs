@@ -11,7 +11,7 @@ namespace XOX_Server.Spells
         public Laser((int,int) index,int dir)
         {
             power = 200;
-            AttackDirectionList = new List<(int, int)>() { (0, 0), (1, 0), (2, 0) };
+            AttackDirectionList = new() { (0, 0), (1, 0), (2, 0) };
 
             objectIndex = index;
             direction = dir;
