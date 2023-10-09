@@ -13,9 +13,10 @@ namespace XOX_Server
         public void PlaceBuilding(Building building,(int x,int y) index)
         {
             field[index.x, index.y] = building;
+            field[index.x, index.y].SetObjectIndex(index);
         }
 
-        public bool GetDamage(int power,(int x,int y) index)
+        public bool Damage(int power,(int x,int y) index)
         {
             if (field[index.x, index.y] != null)
             {
@@ -23,6 +24,19 @@ namespace XOX_Server
                 return true;
             }
             return false;
+        }
+
+        public void Heal(int power,(int x,int y) index)
+        {
+            if (field[index.x, index.y]!=null)
+            {
+                field[index.x,index.y].GetHeal(power);
+            }
+        }
+
+        public void DestroyBuilding((int x,int y) index)
+        {
+            field[index.x, index.y] = null;
         }
     }
 }

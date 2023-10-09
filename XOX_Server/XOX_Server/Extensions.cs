@@ -12,5 +12,10 @@ namespace XOX_Server
         {
             return (tuple1.Item1+tuple2.Item1, tuple1.Item2+tuple2.Item2);
         }
+
+        public static (int, int) Difference((int, int) tuple1, (int, int) tuple2)
+        {
+            return (tuple1.Item1 - tuple2.Item1, tuple1.Item2 - tuple2.Item2);
+        }
     }
 }

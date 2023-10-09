@@ -41,5 +41,10 @@ namespace XOX_Server
         {
             Thread.Sleep((int)(delayTime * 1000));
         }
+
+        public void SetObjectIndex((int,int) index)
+        {
+            objectIndex = index;
+        }
     }
 }

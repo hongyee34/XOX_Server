@@ -9,7 +9,7 @@ namespace XOX_Server.Buildings
 {
     public class LaserCannon : Building
     {
-        public LaserCannon(int a) 
+        public LaserCannon(int dir) 
         {
             grade = 2;
             cost = 4;
@@ -17,11 +17,11 @@ namespace XOX_Server.Buildings
             delayTime = 2;
             AttackDirectionList.Add((1, 0));
 
-            hp = 1100;
+            maxHP = currentHP = 1100;
             power = 120;
             attackSpeed = 1.3f;
 
-            direction = a;
+            direction = dir;
 
             WaitDelayTime();
             TurnDirection();
@@ -29,14 +29,14 @@ namespace XOX_Server.Buildings
             Attack();
         }
 
-        protected async override void Attack()
+        protected override void Attack()
         {
             (int x, int y) secondTarget = (Extensions.Sum(targetList[0], AttackDirectionList[0]));
             while (true)
             {
-                if (Field.Instance.GetDamage(power, targetList[0]))
-                    Field.Instance.GetDamage(power, secondTarget);
-                await Task.Delay((int)(attackSpeed * 1000));
+                if (Field.Instance.Damage(power, targetList[0]))
+                    Field.Instance.Damage(power, secondTarget);
+                Thread.Sleep((int)(delayTime * 1000));
             }
         }
     }

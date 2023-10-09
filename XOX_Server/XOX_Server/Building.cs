@@ -8,7 +8,26 @@ namespace XOX_Server
 {
     public abstract class Building : Card
     {
-        protected int hp;
+        protected int maxHP;
+        protected int currentHP 
+        {
+            get
+            { 
+                return currentHP;
+            }
+            set
+            {
+                currentHP = value;
+                if (currentHP <= 0)
+                {
+                    OnDestroyed();   
+                }
+                else if(currentHP > maxHP)
+                {
+                    currentHP = maxHP;
+                }
+            }
+        }
         protected int power;
         protected float attackSpeed;
 
@@ -17,21 +36,30 @@ namespace XOX_Server
             Attack();
         }
 
-        protected async virtual void Attack()
+        protected virtual void Attack()
         {
             while (true)
             {
                 foreach((int,int) index in targetList)
                 {
-                    Field.Instance.GetDamage(power, index);
+                    Field.Instance.Damage(power, index);
                 }
-                await Task.Delay((int)(attackSpeed*1000));
+                Thread.Sleep((int)(delayTime * 1000));
             }
+        }
+
+        protected virtual void OnDestroyed() {
+            Field.Instance.DestroyBuilding(objectIndex);
         }
 
         public void GetDamage(int power)
         {
-            hp -= power;
+            currentHP -= power;
+        }
+
+        public void GetHeal(int power)
+        {
+            currentHP += power;
         }
     }
 }
