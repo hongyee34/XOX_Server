@@ -28,6 +28,7 @@ namespace XOX_Server.Buildings
             {
                 Thread.Sleep((int)(delayTime * 1000));
                 //돈 1 추가
+                Extensions.SendCommandData("AddMoney", 1);
             }
         }
     }

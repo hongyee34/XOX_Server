@@ -14,10 +14,10 @@ namespace XOX_Server.Buildings
             cost = 6;
             synergy = "Machine";
             delayTime = 2;
-            AttackDirectionList.Add((1, 0));
+            AttackDirectionList = new() { (1, 2), (1, 1), (1, 0) };
 
             maxHP = currentHP = 1900;
-            power = 160;
+            power = 100;
             attackSpeed = 2f;
 
             direction = dir;

@@ -14,7 +14,7 @@ namespace XOX_Server.Spells
             power = 500;
             delayTime = 0.2f;
 
-            objectIndex = index;
+            targetList.Add(index);
 
             WaitDelayTime();
             Skill();
@@ -22,7 +22,8 @@ namespace XOX_Server.Spells
 
         protected override void Skill()
         {
-            Field.Instance.Heal(power, objectIndex);
+            Field.Instance.Heal(power, targetList[0]);
+            Extensions.SendCommandData("HealBuilding", power, targetList);
         }
     }
 }

@@ -10,10 +10,10 @@ namespace XOX_Server
 {
     public class CardDictionary : Singleton<CardDictionary>
     {
-        public Dictionary<int, Func<int, Card>> cardDictionary = new()
+        public Dictionary<int, Func<CommandData, Card>> cardDictionary = new()
         {
-            { 1, (param) => new LittleRobot(param) },
-            {2, (param) => new Laser(param) }
+            { 1, (param) => new LittleRobot(param.direction) },
+            { 2, (param) => new Laser(param.target,param.direction) }
         };
     }
 }

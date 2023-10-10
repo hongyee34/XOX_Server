@@ -29,6 +29,7 @@ namespace XOX_Server.Spells
             {
                 Field.Instance.Damage(power, Extensions.Sum(objectIndex, target));
             }
+            Extensions.SendCommandData("DamageBuilding", power, targetList);
         }
     }
 }

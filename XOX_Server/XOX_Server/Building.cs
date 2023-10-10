@@ -17,7 +17,30 @@ namespace XOX_Server
             }
             set
             {
-                currentHP = value;
+                if(value<currentHP)
+                {
+                    int damage = currentHP- value;
+                    if (barrier > 0)
+                    {
+                        int barrierDamage = barrier - damage;
+                        if (barrierDamage >= 0)
+                        {
+                            // 보호막으로 충분히 데미지를 막을 수 있음
+                            barrier -= damage;
+                        }
+                        else
+                        {
+                            // 보호막으로 데미지를 막을 수 없음
+                            barrier = 0;
+                            currentHP += barrierDamage;
+                        }
+                    }
+                }
+                else
+                {
+                    currentHP = value;
+                }
+
                 if (currentHP <= 0)
                 {
                     OnDestroyed();   
@@ -28,6 +51,7 @@ namespace XOX_Server
                 }
             }
         }
+        protected int barrier;
         protected int power;
         protected float attackSpeed;
 
@@ -40,11 +64,12 @@ namespace XOX_Server
         {
             while (true)
             {
+                Thread.Sleep((int)(delayTime * 1000));
                 foreach((int,int) index in targetList)
                 {
                     Field.Instance.Damage(power, index);
                 }
-                Thread.Sleep((int)(delayTime * 1000));
+                Extensions.SendCommandData("DamageBuilding",power,targetList);
             }
         }
 
@@ -60,6 +85,11 @@ namespace XOX_Server
         public void GetHeal(int power)
         {
             currentHP += power;
+        }
+
+        public void GetBarrier(int power)
+        {
+            barrier += power;
         }
     }
 }

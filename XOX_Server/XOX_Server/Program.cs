@@ -52,7 +52,7 @@ namespace XOX_Server
             client.Close();
         }
 
-        static async void BroadcastMessage(string message)
+        public static async void BroadcastMessage(string message)
         {
             byte[] messageBytes = Encoding.ASCII.GetBytes(message);
 

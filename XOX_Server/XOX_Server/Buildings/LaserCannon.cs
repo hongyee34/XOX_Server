@@ -31,12 +31,16 @@ namespace XOX_Server.Buildings
 
         protected override void Attack()
         {
-            (int x, int y) secondTarget = (Extensions.Sum(targetList[0], AttackDirectionList[0]));
+            List<(int x, int y)> secondTargetList = new() { Extensions.Sum(targetList[0], AttackDirectionList[0]) };
             while (true)
             {
-                if (Field.Instance.Damage(power, targetList[0]))
-                    Field.Instance.Damage(power, secondTarget);
                 Thread.Sleep((int)(delayTime * 1000));
+                if (Field.Instance.Damage(power, targetList[0]))
+                {
+                    Field.Instance.Damage(power/2, secondTargetList[0]);
+                    Extensions.SendCommandData("DamageBuilding", power, targetList);
+                    Extensions.SendCommandData("DamageBuilding", power, secondTargetList);
+                }
             }
         }
     }

@@ -18,11 +18,13 @@ namespace XOX_Server
             switch (commandData.command)
             {
                 case "PlaceBuilding":
-                    Building buildingToPlace = (Building)CardDictionary.Instance.cardDictionary[commandData.type](commandData.direction);
+                    Building buildingToPlace = (Building)CardDictionary.Instance.cardDictionary[commandData.type](commandData);
                     Field.Instance.PlaceBuilding(buildingToPlace, commandData.target);
+                    Program.BroadcastMessage(message);
                     break;
                 case "UseSpell":
-                    CardDictionary.Instance.cardDictionary[commandData.type](commandData.direction);
+                    CardDictionary.Instance.cardDictionary[commandData.type](commandData);
+                    Program.BroadcastMessage(message);
                     break;
             }
 

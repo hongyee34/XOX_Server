@@ -34,6 +34,14 @@ namespace XOX_Server
             }
         }
 
+        public void Barrier(int power,( int x,int y) index)
+        {
+            if (field[index.x,index.y]!=null)
+            {
+                field[index.x,index.y].GetBarrier(power);
+            }
+        }
+
         public void DestroyBuilding((int x,int y) index)
         {
             field[index.x, index.y] = null;
