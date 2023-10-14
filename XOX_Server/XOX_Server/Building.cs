@@ -9,18 +9,19 @@ namespace XOX_Server
     public abstract class Building : Card
     {
         protected int maxHP;
-        protected int currentHP 
+        protected int _currentHP;
+        public int currentHP 
         {
             get
             { 
-                return currentHP;
+                return _currentHP;
             }
             set
             {
-                if(value<currentHP)
+                if(barrier > 0)
                 {
-                    int damage = currentHP- value;
-                    if (barrier > 0)
+                    int damage = _currentHP - value;
+                    if (value<_currentHP)
                     {
                         int barrierDamage = barrier - damage;
                         if (barrierDamage >= 0)
@@ -32,22 +33,22 @@ namespace XOX_Server
                         {
                             // 보호막으로 데미지를 막을 수 없음
                             barrier = 0;
-                            currentHP += barrierDamage;
+                            _currentHP += barrierDamage;
                         }
                     }
                 }
                 else
                 {
-                    currentHP = value;
+                    _currentHP = value;
                 }
 
-                if (currentHP <= 0)
+                if (_currentHP <= 0)
                 {
                     OnDestroyed();   
                 }
-                else if(currentHP > maxHP)
+                else if(_currentHP > maxHP)
                 {
-                    currentHP = maxHP;
+                    _currentHP = maxHP;
                 }
             }
         }
@@ -55,26 +56,21 @@ namespace XOX_Server
         protected int power;
         protected float attackSpeed;
 
-        protected Building()
-        {
-            Attack();
-        }
+        protected bool destroyed = false;
 
-        protected virtual void Attack()
+        protected virtual async void Attack()
         {
             while (true)
             {
-                Thread.Sleep((int)(delayTime * 1000));
-                foreach((int,int) index in targetList)
-                {
-                    Field.Instance.Damage(power, index);
-                }
-                Extensions.SendCommandData("DamageBuilding",power,targetList);
+                await Task.Delay(TimeSpan.FromSeconds(attackSpeed));
+                if (destroyed) break;
+                Field.Instance.Damage(power, teamColor, targetList);
             }
         }
 
         protected virtual void OnDestroyed() {
-            Field.Instance.DestroyBuilding(objectIndex);
+            destroyed = true;
+            Field.Instance.DestroyBuilding(objectPosition);
         }
 
         public void GetDamage(int power)

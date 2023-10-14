@@ -9,37 +9,43 @@ namespace XOX_Server.Buildings
 {
     public class LaserCannon : Building
     {
-        public LaserCannon(int dir) 
+        public LaserCannon(string color, (int x,int y) index, int dir) 
         {
             grade = 2;
             cost = 4;
             synergy = "Machine";
             delayTime = 2;
-            AttackDirectionList.Add((1, 0));
+            AttackDirectionList.Add((0, 1));
 
-            maxHP = currentHP = 1100;
+            maxHP = _currentHP = 1100;
             power = 120;
             attackSpeed = 1.3f;
 
+            objectPosition = Extensions.ConvertIndexToPosition(index);
+            teamColor = color;
             direction = dir;
 
-            WaitDelayTime();
+            RunCard();
+        }
+
+        protected override async void RunCard()
+        {
+            await Task.Delay(TimeSpan.FromSeconds(delayTime));
             TurnDirection();
             SetTargetList();
             Attack();
         }
 
-        protected override void Attack()
+        protected override async void Attack()
         {
             List<(int x, int y)> secondTargetList = new() { Extensions.Sum(targetList[0], AttackDirectionList[0]) };
             while (true)
             {
-                Thread.Sleep((int)(delayTime * 1000));
-                if (Field.Instance.Damage(power, targetList[0]))
+                await Task.Delay(TimeSpan.FromSeconds(attackSpeed));
+                if (destroyed) break;
+                if (Field.Instance.Damage(power, teamColor, targetList))
                 {
-                    Field.Instance.Damage(power/2, secondTargetList[0]);
-                    Extensions.SendCommandData("DamageBuilding", power, targetList);
-                    Extensions.SendCommandData("DamageBuilding", power, secondTargetList);
+                    Field.Instance.Damage(power/2, teamColor, secondTargetList);
                 }
             }
         }

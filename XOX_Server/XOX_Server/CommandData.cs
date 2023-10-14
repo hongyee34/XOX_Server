@@ -8,11 +8,12 @@ namespace XOX_Server
 {
     public class CommandData
     {
-        public string command;
-        public int type;
-        public (int x,int y) target;
-        public int direction;
-        public int amount;
-        public List<(int x, int y)> targetList;
+        public string command { get; set; }
+        public string color { get; set; }
+        public int type { get; set; }
+        public (int x, int y) target { get; set; }
+        public int direction { get; set; }
+        public int amount { get; set; }
+        public List<(int x, int y)> targetList { get; set; }
     }
 }

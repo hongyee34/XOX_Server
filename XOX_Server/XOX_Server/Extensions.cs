@@ -9,6 +9,18 @@ namespace XOX_Server
 {
     public class Extensions
     {
+        public static JsonSerializerOptions options = new() { IncludeFields = true };
+
+        public static (int x, int y) ConvertIndexToPosition((int x,int y) index)
+        {
+            return (index.x - 1, index.y - 1);
+        }
+
+        public static (int x, int y) ConvertPositionToIndex((int x,int y) position)
+        {
+            return (position.x + 1, position.y + 1);
+        }
+
         public static (int, int) Sum((int, int) tuple1, (int, int) tuple2)
         {
             return (tuple1.Item1+tuple2.Item1, tuple1.Item2+tuple2.Item2);
@@ -19,7 +31,7 @@ namespace XOX_Server
             return (tuple1.Item1 - tuple2.Item1, tuple1.Item2 - tuple2.Item2);
         }
 
-        public static void SendCommandData(string command,int amount,List<(int x,int y)> targetList) 
+        public static async void SendCommandData(string command,int amount,List<(int x,int y)> targetList) 
         {
             CommandData commandData = new CommandData()
             {
@@ -28,10 +40,10 @@ namespace XOX_Server
                 targetList = targetList
             };
 
-            Program.BroadcastMessage(JsonSerializer.Serialize(commandData));
+            await Program.BroadcastMessage(JsonSerializer.Serialize(commandData, options));
         }
 
-        public static void SendCommandData(string command, int amount)
+        public static async void SendCommandData(string command, int amount)
         {
             CommandData commandData = new CommandData()
             {
@@ -39,7 +51,7 @@ namespace XOX_Server
                 amount = amount
             };
 
-            Program.BroadcastMessage(JsonSerializer.Serialize(commandData));
+            await Program.BroadcastMessage(JsonSerializer.Serialize(commandData, options));
         }
     }
 }

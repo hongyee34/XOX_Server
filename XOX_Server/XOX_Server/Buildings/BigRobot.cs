@@ -8,7 +8,7 @@ namespace XOX_Server.Buildings
 {
     public class BigRobot : Building
     {
-        public BigRobot(int dir) 
+        public BigRobot(string color, (int x, int y) index, int dir) 
         {
             grade = 3;
             cost = 6;
@@ -16,13 +16,20 @@ namespace XOX_Server.Buildings
             delayTime = 2;
             AttackDirectionList = new() { (1, 2), (1, 1), (1, 0) };
 
-            maxHP = currentHP = 1900;
+            maxHP = _currentHP = 1900;
             power = 100;
             attackSpeed = 2f;
 
+            objectPosition = Extensions.ConvertIndexToPosition(index);
+            teamColor = color;
             direction = dir;
 
-            WaitDelayTime();
+            RunCard();
+        }
+
+        protected override async void RunCard()
+        {
+            await Task.Delay(TimeSpan.FromSeconds(delayTime));
             TurnDirection();
             SetTargetList();
             Attack();
@@ -30,8 +37,9 @@ namespace XOX_Server.Buildings
 
         protected override void OnDestroyed()
         {
+            destroyed = true;
             Thread.Sleep(10 * 1000);
-            Field.Instance.DestroyBuilding(objectIndex);
+            Field.Instance.DestroyBuilding(objectPosition);
         }
     }
 }

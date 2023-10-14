@@ -8,16 +8,20 @@ namespace XOX_Server.Spells
 {
     public class Laser : Spell
     {
-        public Laser((int,int) index,int dir)
+        public Laser(string color, (int,int) index,int dir)
         {
             power = 200;
             delayTime = 0.1f;
             AttackDirectionList = new() { (0, 0), (1, 0), (2, 0) };
 
-            objectIndex = index;
+            teamColor = color;
+            objectPosition = index;
             direction = dir;
+        }
 
-            WaitDelayTime();
+        protected override async void RunCard()
+        {
+            await Task.Delay(TimeSpan.FromSeconds(delayTime));
             TurnDirection();
             SetTargetList();
             Skill();
@@ -25,11 +29,7 @@ namespace XOX_Server.Spells
 
         protected override void Skill()
         {
-            foreach((int x,int y) target in targetList)
-            {
-                Field.Instance.Damage(power, Extensions.Sum(objectIndex, target));
-            }
-            Extensions.SendCommandData("DamageBuilding", power, targetList);
+            Field.Instance.Damage(power, teamColor, targetList);
         }
     }
 }

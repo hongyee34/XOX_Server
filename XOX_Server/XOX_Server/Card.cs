@@ -13,10 +13,13 @@ namespace XOX_Server
         protected string synergy;
         protected float delayTime;
 
-        protected (int x, int y) objectIndex;
+        public string teamColor;
+        protected (int x, int y) objectPosition;
         protected int direction;
         protected List<(int x, int y)> AttackDirectionList = new();
         protected List<(int x,int y)> targetList = new();
+
+        protected abstract void RunCard();
 
         protected void TurnDirection()
         {
@@ -33,18 +36,14 @@ namespace XOX_Server
         {
             for(int i = 0;i < AttackDirectionList.Count();i++)
             {
-                targetList[i] = Extensions.Sum(objectIndex, AttackDirectionList[i]);
+                targetList.Add(Extensions.Sum(objectPosition, AttackDirectionList[i]));
             }
         }
 
-        protected void WaitDelayTime()
+        public void SetObjectPosition((int,int) index)
         {
-            Thread.Sleep((int)(delayTime * 1000));
+            objectPosition = Extensions.ConvertIndexToPosition(index);
         }
 
-        public void SetObjectIndex((int,int) index)
-        {
-            objectIndex = index;
-        }
     }
 }

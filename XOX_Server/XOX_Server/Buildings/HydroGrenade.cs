@@ -8,19 +8,26 @@ namespace XOX_Server.Buildings
 {
     public class HydroGrenade : Building
     {
-        public HydroGrenade()
+        public HydroGrenade(string color, (int x, int y) index, int dir)
         {
             grade = 4;
             cost = 9;
             synergy = "Machine";
             delayTime = 3;
-            targetList = new() { (0, 0), (1, 0), (0, 1), (1, 1), (2, 1), (1, 2), (2, 0), (0, 2) ,(2, 2) };
+            targetList = new() { (1,-1), (1,0), (1,1), (0,-1), (0,0), (0,1), (-1,-1), (-1,0),(-1,1)};
 
-            maxHP = currentHP = 2000;
+            maxHP = _currentHP = 2000;
             power = 1100;
             attackSpeed = 10;
 
-            WaitDelayTime();
+            teamColor = color;
+
+            RunCard();
+        }
+
+        protected override async void RunCard()
+        {
+            await Task.Delay(TimeSpan.FromSeconds(delayTime));
             Attack();
         }
     }
