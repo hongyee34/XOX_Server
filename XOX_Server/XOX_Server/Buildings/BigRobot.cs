@@ -14,7 +14,7 @@ namespace XOX_Server.Buildings
             cost = 6;
             synergy = "Machine";
             delayTime = 2;
-            AttackDirectionList = new() { (1, 2), (1, 1), (1, 0) };
+            AttackDirectionList = new() { (1, 1), (1, 0), (1, -1) };
 
             maxHP = _currentHP = 1900;
             power = 100;
