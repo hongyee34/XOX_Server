@@ -35,6 +35,7 @@ namespace XOX_Server.Buildings
 
         protected override void Attack()
         {
+            Extensions.SendCommandData("ActiveSkill", Extensions.ConvertPositionToIndex(objectPosition));
             Field.Instance.Barrier(power, teamColor, targetList);
         }
     }

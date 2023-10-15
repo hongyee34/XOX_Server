@@ -53,5 +53,16 @@ namespace XOX_Server
 
             await Program.BroadcastMessage(JsonSerializer.Serialize(commandData, options));
         }
+
+        public static async void SendCommandData(string command, (int x,int y) index)
+        {
+            CommandData commandData = new CommandData()
+            {
+                command = command,
+                target = index
+            };
+
+            await Program.BroadcastMessage(JsonSerializer.Serialize(commandData, options));
+        }
     }
 }

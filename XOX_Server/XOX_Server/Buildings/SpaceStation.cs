@@ -35,6 +35,7 @@ namespace XOX_Server.Buildings
             {
                 await Task.Delay((int)(attackSpeed * 1000));
                 if (destroyed) break;
+                Extensions.SendCommandData("ActiveSkill", Extensions.ConvertPositionToIndex(objectPosition));
                 //돈 1 추가
                 Extensions.SendCommandData("AddMoney", 1);
             }

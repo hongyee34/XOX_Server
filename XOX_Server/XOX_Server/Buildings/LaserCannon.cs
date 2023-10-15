@@ -43,6 +43,7 @@ namespace XOX_Server.Buildings
             {
                 await Task.Delay(TimeSpan.FromSeconds(attackSpeed));
                 if (destroyed) break;
+                Extensions.SendCommandData("ActiveSkill", Extensions.ConvertPositionToIndex(objectPosition));
                 if (Field.Instance.Damage(power, teamColor, targetList))
                 {
                     Field.Instance.Damage(power/2, teamColor, secondTargetList);
